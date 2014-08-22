@@ -84,4 +84,23 @@ public class MyGattCallback extends BluetoothGattCallback{
             }
         });
     }
+
+    @Override
+    public void onCharacteristicRead(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, int status) {
+        super.onCharacteristicRead(gatt, characteristic, status);
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (characteristic.getUuid().equals(accCharacteristicUuid)){
+                    TextView accStateTextView = (TextView) mActivity.findViewById(R.id.accTextView);
+                    byte accValue[] = characteristic.getValue();
+                    accStateTextView.setText("Acc State: "+accValue[0]+","+accValue[1]+","+accValue[2]);
+                } else {
+                    TextView buttonStateTextView = (TextView) mActivity.findViewById(R.id.buttonStateTextView);
+                    buttonStateTextView.setText("Simple Key State: "+characteristic.getValue()[0]);
+                }
+
+            }
+        });
+    }
 }

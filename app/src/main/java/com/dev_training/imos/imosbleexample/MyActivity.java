@@ -155,6 +155,12 @@ public class MyActivity extends Activity {
                     accDescriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                     mGatt.writeDescriptor(accDescriptor);
                     break;
+                case R.id.accIndicationButton:
+                    accService = mGatt.getService(accServiceUuid);
+                    accCharacteristic
+                            = accService.getCharacteristic(accCharacteristicUuid);
+                    mGatt.readCharacteristic(accCharacteristic);
+                    break;
 
             }
         }
