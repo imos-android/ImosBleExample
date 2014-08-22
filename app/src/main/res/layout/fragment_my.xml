@@ -2,7 +2,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/">
 
     <EditText
         android:layout_width="match_parent"
@@ -30,6 +31,34 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="buttonState"
         android:id="@+id/buttonStateTextView"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Turon On Acc"
+        android:id="@+id/turnOnAcc"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Acc Indication"
+        android:id="@+id/accIndicationButton" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Acc Notify"
+        android:id="@+id/enableAccNotifyButton"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Acc result"
+        android:id="@+id/accTextView"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

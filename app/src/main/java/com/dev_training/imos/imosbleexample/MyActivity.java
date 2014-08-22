@@ -19,6 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+
+import java.util.UUID;
+
 import static  com.dev_training.imos.imosbleexample.UUIDs.*;
 
 
@@ -76,11 +79,21 @@ public class MyActivity extends Activity {
             mRootView = inflater.inflate(R.layout.fragment_my, container, false);
             mRootView.findViewById(R.id.button).setOnClickListener(this);
             mRootView.findViewById(R.id.enableNotifyButton).setOnClickListener(this);
+            mRootView.findViewById(R.id.turnOnAcc).setOnClickListener(this);
+            mRootView.findViewById(R.id.accIndicationButton).setOnClickListener(this);
+            mRootView.findViewById(R.id.enableAccNotifyButton).setOnClickListener(this);
+
             return mRootView;
         }
 
         @Override
         public void onClick(View view) {
+            String TI_BASE_UUID = "-0451-4000-b000-000000000000";
+            UUID accServiceUuid = UUID.fromString("f000aa10"+TI_BASE_UUID);
+            UUID accCharacteristicUuid = UUID.fromString("f000aa11"+TI_BASE_UUID);
+            UUID accConfigCharacteristicUuid = UUID.fromString("f000aa12"+TI_BASE_UUID);
+            UUID accPeriodCharacteristicUuid = UUID.fromString("f000aa13"+TI_BASE_UUID);
+
             switch (view.getId()){
                 case R.id.button:
                     BluetoothManager bluetoothManager = (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
@@ -122,6 +135,27 @@ public class MyActivity extends Activity {
                     mGatt.writeDescriptor(descriptor);
 
                     break;
+
+                case R.id.turnOnAcc:
+                    BluetoothGattService accService = mGatt.getService(accServiceUuid);
+                    BluetoothGattCharacteristic accConfigCharacteristic
+                            = accService.getCharacteristic(accConfigCharacteristicUuid);
+                    BluetoothGattCharacteristic accPeriodCharacteristic
+                            = accService.getCharacteristic(accPeriodCharacteristicUuid);
+                    accConfigCharacteristic.setValue(new byte[]{0x01});
+                    mGatt.writeCharacteristic(accConfigCharacteristic);
+                    break;
+                case R.id.enableAccNotifyButton:
+                    accService = mGatt.getService(accServiceUuid);
+                    BluetoothGattCharacteristic accCharacteristic
+                            = accService.getCharacteristic(accCharacteristicUuid);
+                    mGatt.setCharacteristicNotification(accCharacteristic, true);
+                    BluetoothGattDescriptor accDescriptor = accCharacteristic.getDescriptor(
+                            UUID_CLIENT_CHARACTERISTIC_CONFIGURATION);
+                    accDescriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                    mGatt.writeDescriptor(accDescriptor);
+                    break;
+
             }
         }
     }
