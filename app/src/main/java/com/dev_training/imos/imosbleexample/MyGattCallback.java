@@ -66,7 +66,7 @@ public class MyGattCallback extends BluetoothGattCallback{
             @Override
             public void run() {
                 TextView buttonStateTextView = (TextView) mActivity.findViewById(R.id.buttonStateTextView);
-                buttonStateTextView.setText("Simple Key State"+characteristic.getValue()[0]);
+                buttonStateTextView.setText("Simple Key State: "+characteristic.getValue()[0]);
             }
         });
     }
