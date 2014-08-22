@@ -103,4 +103,16 @@ public class MyGattCallback extends BluetoothGattCallback{
             }
         });
     }
+
+    @Override
+    public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, final int status) {
+        super.onCharacteristicWrite(gatt, characteristic, status);
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(mActivity, "書き込みを行いました。status = "+status,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

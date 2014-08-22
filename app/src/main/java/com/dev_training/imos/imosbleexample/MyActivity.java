@@ -82,6 +82,7 @@ public class MyActivity extends Activity {
             mRootView.findViewById(R.id.turnOnAcc).setOnClickListener(this);
             mRootView.findViewById(R.id.accIndicationButton).setOnClickListener(this);
             mRootView.findViewById(R.id.enableAccNotifyButton).setOnClickListener(this);
+            mRootView.findViewById(R.id.changePeriodButton).setOnClickListener(this);
 
             return mRootView;
         }
@@ -163,7 +164,7 @@ public class MyActivity extends Activity {
                     accService = mGatt.getService(accServiceUuid);
                     BluetoothGattCharacteristic accPeriodCharacteristic
                             = accService.getCharacteristic(accPeriodCharacteristicUuid);
-                    accPeriodCharacteristic.setValue(new byte[]{0x1});
+                    accPeriodCharacteristic.setValue(new byte[]{0xa});
                     mGatt.writeCharacteristic(accPeriodCharacteristic);
                     break;
             }
