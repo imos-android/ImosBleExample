@@ -19,7 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.FrameLayout;
 
+import java.util.Random;
 import java.util.UUID;
 
 import static  com.dev_training.imos.imosbleexample.UUIDs.*;
@@ -83,6 +85,24 @@ public class MyActivity extends Activity {
             mRootView.findViewById(R.id.accIndicationButton).setOnClickListener(this);
             mRootView.findViewById(R.id.enableAccNotifyButton).setOnClickListener(this);
             mRootView.findViewById(R.id.changePeriodButton).setOnClickListener(this);
+
+            FrameLayout frameLayout
+                    = (FrameLayout) mRootView.findViewById(R.id.frameLayout);
+            ValueWithTimestampList sampleData = new ValueWithTimestampList();
+
+            // サンプルのデータを生成
+            Random rand = new Random();
+            for (int i=0; i<100; i++){
+                ValueWithTimestamp valueWithTimestamp = new ValueWithTimestamp();
+                // 現時刻から1秒ごとのサンプルを作成
+                valueWithTimestamp.timestamp = System.currentTimeMillis() + i * 1000;
+                valueWithTimestamp.value = rand.nextInt(256);
+                sampleData.add(valueWithTimestamp);
+            }
+
+            // GraphViewの生成と代入
+            GraphView graphView = new GraphView(getActivity(), sampleData);
+            frameLayout.addView(graphView);
 
             return mRootView;
         }

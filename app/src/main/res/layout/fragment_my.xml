@@ -1,9 +1,9 @@
 <LinearLayout
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout">
+    android:id="@+id/layout"
+    android:orientation="vertical">
 
     <EditText
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Turon On Acc"
+        android:text="Turn On Acc"
         android:id="@+id/turnOnAcc"
         android:layout_gravity="center_horizontal" />
 
@@ -65,7 +65,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Acc result"
-        android:id="@+id/accTextView"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/accTextView" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/frameLayout"></FrameLayout>
 
 </LinearLayout>
