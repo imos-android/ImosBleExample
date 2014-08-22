@@ -140,9 +140,7 @@ public class MyActivity extends Activity {
                     BluetoothGattService accService = mGatt.getService(accServiceUuid);
                     BluetoothGattCharacteristic accConfigCharacteristic
                             = accService.getCharacteristic(accConfigCharacteristicUuid);
-                    BluetoothGattCharacteristic accPeriodCharacteristic
-                            = accService.getCharacteristic(accPeriodCharacteristicUuid);
-                    accConfigCharacteristic.setValue(new byte[]{0x01});
+                                        accConfigCharacteristic.setValue(new byte[]{0x01});
                     mGatt.writeCharacteristic(accConfigCharacteristic);
                     break;
                 case R.id.enableAccNotifyButton:
@@ -161,7 +159,13 @@ public class MyActivity extends Activity {
                             = accService.getCharacteristic(accCharacteristicUuid);
                     mGatt.readCharacteristic(accCharacteristic);
                     break;
-
+                case R.id.changePeriodButton:
+                    accService = mGatt.getService(accServiceUuid);
+                    BluetoothGattCharacteristic accPeriodCharacteristic
+                            = accService.getCharacteristic(accPeriodCharacteristicUuid);
+                    accPeriodCharacteristic.setValue(new byte[]{0x1});
+                    mGatt.writeCharacteristic(accPeriodCharacteristic);
+                    break;
             }
         }
     }
