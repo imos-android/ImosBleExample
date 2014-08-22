@@ -67,10 +67,12 @@ public class MyActivity extends Activity {
     public static class PlaceholderFragment extends Fragment implements View.OnClickListener {
         private static final String TAG = "PlaceholderFragment";
         private static final String MY_DEVICE_ADDRESS ="BC:6A:29:AB:5C:C7" ;
+        private static final int GRAPHVIEW_ID = 12345678;
         private View mRootView;
         private BluetoothAdapter mBluetoothAdapter;
         private MyGattCallback mMyGattCallback;
         private BluetoothGatt mGatt;
+        private ValueWithTimestampList mSampleData;
 
         public PlaceholderFragment() {
         }
@@ -130,7 +132,7 @@ public class MyActivity extends Activity {
                         public void onLeScan(BluetoothDevice bluetoothDevice, int i, byte[] bytes) {
                             // Scan
                             if (bluetoothDevice.getAddress().equals(MY_DEVICE_ADDRESS)){
-                                //
+
                                 mMyGattCallback = new MyGattCallback(getActivity());
                                 mGatt = bluetoothDevice.connectGatt(
                                         getActivity(),

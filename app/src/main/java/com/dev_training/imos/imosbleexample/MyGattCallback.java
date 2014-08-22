@@ -6,9 +6,11 @@ import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -22,9 +24,12 @@ public class MyGattCallback extends BluetoothGattCallback{
     UUID accPeriodCharacteristicUuid = UUID.fromString("f000aa13"+TI_BASE_UUID);
 
     private Activity mActivity;
+    private ValueWithTimestampList mSampleData;
 
     public MyGattCallback(Activity mActivity) {
         this.mActivity = mActivity;
+        mSampleData = new ValueWithTimestampList();
+
     }
 
     @Override
@@ -76,6 +81,19 @@ public class MyGattCallback extends BluetoothGattCallback{
                     TextView accStateTextView = (TextView) mActivity.findViewById(R.id.accTextView);
                     byte accValue[] = characteristic.getValue();
                     accStateTextView.setText("Acc State: "+accValue[0]+","+accValue[1]+","+accValue[2]);
+
+                    ValueWithTimestamp valueWithTimestamp= new ValueWithTimestamp();
+                    valueWithTimestamp.timestamp = System.currentTimeMillis();
+                    valueWithTimestamp.value = accValue[0];
+
+                    mSampleData.add(valueWithTimestamp);
+
+                    FrameLayout frameLayout
+                            = (FrameLayout) mActivity.findViewById(R.id.frameLayout);
+                    frameLayout.removeAllViews();
+                    // GraphViewの生成と代入
+                    GraphView graphView = new GraphView(mActivity, mSampleData);
+                    frameLayout.addView(graphView);
                 } else {
                     TextView buttonStateTextView = (TextView) mActivity.findViewById(R.id.buttonStateTextView);
                     buttonStateTextView.setText("Simple Key State: "+characteristic.getValue()[0]);
